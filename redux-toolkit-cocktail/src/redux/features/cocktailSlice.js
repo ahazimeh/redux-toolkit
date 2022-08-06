@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchCocktail = createAsyncThunk(
+export const fetchCocktails = createAsyncThunk(
   "cocktails/fetchCocktails",
   async () => {
     return fetch(
@@ -13,19 +13,19 @@ const cocktailSlice = createSlice({
   name: "cocktails",
   initialState: {
     cocktailSlice: [],
-    cocktail: [],
+    cocktails: [],
     loading: false,
     error: null,
   },
   extraReducers: {
-    [fetchCocktail.pending]: (state, action) => {
+    [fetchCocktails.pending]: (state, action) => {
       state.loading = true;
     },
-    [fetchCocktail.fulfilled]: (state, action) => {
+    [fetchCocktails.fulfilled]: (state, action) => {
       state.loading = false;
-      state.cocktail = action.payload.drink;
+      state.cocktails = action.payload.drinks;
     },
-    [fetchCocktail.rejected]: (state, action) => {
+    [fetchCocktails.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
