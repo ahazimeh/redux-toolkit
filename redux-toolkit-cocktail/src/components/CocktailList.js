@@ -4,11 +4,7 @@ import { fetchCocktails } from "../redux/features/cocktailSlice";
 import { Link } from "react-router-dom";
 
 const CocktailList = () => {
-  const { cocktails, loading } = useSelector((state) => {
-    return {
-      ...state.app,
-    };
-  });
+  const { cocktails, loading } = useSelector((state) => ({ ...state.app }));
   const [modifiedCocktail, setModifiedCocktail] = useState([]);
   const dispatch = useDispatch();
 
@@ -39,7 +35,7 @@ const CocktailList = () => {
   if (loading) {
     return (
       <div className="spinner-grow" role="status">
-        <span className="visually-hidden"></span>
+        <span className="visually-hidden">loading...</span>
       </div>
     );
   }
