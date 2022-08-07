@@ -1,0 +1,4 @@
+npx create-react-app my-app --template redux
+npx create-react-app my-app --template redux-typescript
+
+rtk-random-user
