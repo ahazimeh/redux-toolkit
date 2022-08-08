@@ -7,6 +7,12 @@ import "./Home.css";
 const Home = () => {
   const { data, isLoading, error } = useContactsQuery();
 
+  useEffect(() => {
+    if (error) {
+      toast.error("Something went wrong");
+    }
+  }, [error]);
+
   if (isLoading) {
     return <h3>Loading...</h3>;
   }

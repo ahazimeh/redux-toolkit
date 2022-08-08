@@ -4,11 +4,14 @@ import "./App.css";
 import AddEdit from "./pages/AddEdit";
 import Home from "./pages/Home";
 import Info from "./pages/Info";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/AddContact" element={<AddEdit />} />
