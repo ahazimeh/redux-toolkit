@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAddContactMutation } from "../services/contactsApi";
 import "./AddEdit.css";
 
 const initialState = {
@@ -11,11 +12,24 @@ const initialState = {
 
 const AddEdit = () => {
   const [formValue, setFormValue] = useState(initialState);
+  const [addContact] = useAddContactMutation();
   const { name, email, contact } = formValue;
   const navigate = useNavigate();
 
-  const handleInputChange = (e: any) => {};
-  const handleSubmit = (e: any) => {};
+  const handleInputChange = (e: any) => {
+    let { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!name || !email || !contact) {
+      toast.error("Please provide value into each input field");
+    } else {
+      await addContact(formValue);
+      navigate("/");
+      toast.success("Contact Added Successfully");
+    }
+  };
   return (
     <div style={{ marginTop: "100px" }}>
       <form
