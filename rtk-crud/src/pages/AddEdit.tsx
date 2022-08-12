@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   useAddContactMutation,
   useContactQuery,
+  useUpdateContactMutation,
 } from "../services/contactsApi";
 import "./AddEdit.css";
 
@@ -17,6 +18,7 @@ const AddEdit = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [editMode, setEditMode] = useState(false);
   const [addContact] = useAddContactMutation();
+  const [udpateContact] = useUpdateContactMutation();
   const { name, email, contact } = formValue;
   const navigate = useNavigate();
 
@@ -51,9 +53,16 @@ const AddEdit = () => {
     if (!name || !email || !contact) {
       toast.error("Please provide value into each input field");
     } else {
-      await addContact(formValue);
-      navigate("/");
-      toast.success("Contact Added Successfully");
+      if (!editMode) {
+        await addContact(formValue);
+        navigate("/");
+        toast.success("Contact Added Successfully");
+      } else {
+        await udpateContact(formValue);
+        navigate("/");
+        setEditMode(false);
+        toast.success("Contact Updated Successfully");
+      }
     }
   };
   return (
@@ -94,7 +103,7 @@ const AddEdit = () => {
           value={contact}
           onChange={handleInputChange}
         />
-        <input type="submit" value="Add" />
+        <input type="submit" value={editMode ? "Update" : "Add"} />
       </form>
     </div>
   );
