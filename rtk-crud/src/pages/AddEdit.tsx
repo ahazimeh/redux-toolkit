@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAddContactMutation } from "../services/contactsApi";
+import {
+  useAddContactMutation,
+  useContactQuery,
+} from "../services/contactsApi";
 import "./AddEdit.css";
 
 const initialState = {
@@ -12,9 +15,32 @@ const initialState = {
 
 const AddEdit = () => {
   const [formValue, setFormValue] = useState(initialState);
+  const [editMode, setEditMode] = useState(false);
   const [addContact] = useAddContactMutation();
   const { name, email, contact } = formValue;
   const navigate = useNavigate();
+
+  const { id } = useParams();
+  const { data, error } = useContactQuery(id!);
+  console.log(data);
+
+  useEffect(() => {
+    if (error && id) {
+      toast.error("Something went wrong");
+    }
+  }, [error, id]);
+
+  useEffect(() => {
+    if (id) {
+      setEditMode(true);
+      if (data) {
+        setFormValue({ ...data });
+      }
+    } else {
+      setEditMode(false);
+      setFormValue({ ...initialState });
+    }
+  }, [id, data]);
 
   const handleInputChange = (e: any) => {
     let { name, value } = e.target;
