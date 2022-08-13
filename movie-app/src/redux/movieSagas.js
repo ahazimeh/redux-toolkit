@@ -2,7 +2,7 @@ import { takeLatest, put, fork, call } from "redux-saga/effects";
 import { fetchMovies } from "./api";
 import { getMovies, setMovies } from "./feature/movieSlice";
 
-function* onLoadMoviesAsync(payload) {
+function* onLoadMoviesAsync({ payload }) {
   try {
     const movieName = payload;
     const response = yield call(fetchMovies, movieName);
