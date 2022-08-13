@@ -7,5 +7,5 @@ export const fetchMovies = async (movieName) => {
 };
 
 export const fetchMovie = async (movieId) => {
-  return axios.get(`${API_ENDPOINT}&id=${movieId}`);
+  return axios.get(`${API_ENDPOINT}&i=${movieId}`);
 };

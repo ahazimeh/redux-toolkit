@@ -9,7 +9,7 @@
 //   },
 //   form: {
 //     width: "90vw",
-//     maxWidth: "170px",
+//     maxWidth: "1170px",
 //     margin: "0 auto",
 //     marginTop: "3rem",
 //     marginButtom: "3rem ",
@@ -18,5 +18,12 @@
 //     color: "#F93154",
 //     paddingTop: "0.5rem",
 //     fontSize: "2.15rem",
+//   },
+//   section: {
+//     width: "90vw",
+//     maxWidth: "1170px",
+//     margin: "4rem auto",
+//     display: "flex",
+//     gap: "2rem",
 //   },
 // }));
