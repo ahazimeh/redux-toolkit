@@ -13,6 +13,6 @@ const store = configureStore({
     getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 export default store;

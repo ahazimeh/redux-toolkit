@@ -6,6 +6,16 @@ const movieSlice = createSlice({
     moviesList: [],
     movie: {},
   },
+  reducers: {
+    getMovie(name) {
+      return name;
+    },
+    setMovies: (state, action) => {
+      state.moviesList = action.payload;
+    },
+  },
 });
+
+export const { getMovie, setMovies } = movieSlice.actions;
 
 export default movieSlice.reducer;
