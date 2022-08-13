@@ -10,3 +10,5 @@ generator function
     console.log(iterator.next())
     console.log(iterator.next())
     console.log(iterator.next())
+
+    npm i @mui/material @emotion/react @emotion/styled @mui/styles react-redux @reduxjs/toolkit redux-saga react-router-dom axios
