@@ -1,6 +1,6 @@
 import { takeLatest, put, fork, call } from "redux-saga/effects";
 import { fetchMovies } from "./api";
-import { getMovie, setMovies } from "./feature/movieSlice";
+import { getMovies, setMovies } from "./feature/movieSlice";
 
 function* onLoadMoviesAsync(payload) {
   try {
@@ -15,7 +15,7 @@ function* onLoadMoviesAsync(payload) {
 }
 
 function* onLoadMovies() {
-  yield takeLatest(getMovie.type, onLoadMoviesAsync);
+  yield takeLatest(getMovies.type, onLoadMoviesAsync);
 }
 
 export const movieSagas = [fork(onLoadMovies)];

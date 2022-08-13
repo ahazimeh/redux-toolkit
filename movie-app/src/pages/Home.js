@@ -1,7 +1,13 @@
 import React from "react";
+import Search from "../components/Search";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Search />
+      {/* Movies List */}
+    </>
+  );
 };
 
 export default Home;
