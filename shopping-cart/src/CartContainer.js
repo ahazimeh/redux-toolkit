@@ -1,9 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import CartItem from "./CartItem";
+import { useEffect } from "react";
+import { getCartTotal } from "./redux/feature/cartSlice";
 
 const CartContainer = () => {
   const { items, totalAmount } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, []);
   return (
     <>
       <h2 className="lead-mb-0 mt-2">Your Shopping Cart</h2>
