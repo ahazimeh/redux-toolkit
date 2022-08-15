@@ -12,6 +12,41 @@ import { useGetRecipesMutation } from "./services/recipeApi";
 import Card from "./components/Card";
 import Spinner from "./components/Spinner";
 
+const options = [
+  {
+    label: "Vegan",
+    value: "vegan",
+  },
+  {
+    label: "Vegetarian",
+    value: "vegetarian",
+  },
+  {
+    label: "Paleo",
+    value: "paleo",
+  },
+  {
+    label: "Vegetarian",
+    value: "vegetarian",
+  },
+  {
+    label: "Dairy Free",
+    value: "dairy-free",
+  },
+  {
+    label: "Vegetarian",
+    value: "vegetarian",
+  },
+  {
+    label: "Low Sugar",
+    value: "low-sugar",
+  },
+  {
+    label: "Egg Free",
+    value: "egg-free",
+  },
+];
+
 function App() {
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("");
@@ -36,6 +71,10 @@ function App() {
   const handleSearch = () => {
     setQuery(value);
     setValue("");
+  };
+
+  const handleClick = (e: any) => {
+    setHealth(e.target.value);
   };
 
   return (
@@ -65,6 +104,19 @@ function App() {
         />
         <div className="col-auto">
           <MDBBtn onClick={handleSearch}>Search</MDBBtn>
+        </div>
+        <div className="col-auto">
+          <select
+            className="categoryDropdown"
+            onChange={handleClick}
+            value={health}
+          >
+            {options.map((option, index) => (
+              <option value={option.value || ""} key={index}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <MDBRow className="row-cols-1 row-cols-md-3 g-4">
