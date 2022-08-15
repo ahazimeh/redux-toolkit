@@ -8,13 +8,25 @@ import {
   MDBNavbarBrand,
 } from "mdb-react-ui-kit";
 import "./App.css";
+import { useGetRecipesMutation } from "./services/recipeApi";
+import Card from "./components/Card";
 
 function App() {
-  const [value, setValue] = useState<string>();
-  const [query, setQuery] = useState();
+  const [value, setValue] = useState("");
+  const [query, setQuery] = useState("");
   const [health, setHealth] = useState("vegan");
   const [show, setShow] = useState(false);
   const [recipe, setRecipe] = useState({});
+
+  const [getRecipes, { isLoading, data }] = useGetRecipesMutation();
+
+  useEffect(() => {
+    getFoodRecipes();
+  }, [query, health]);
+
+  const getFoodRecipes = async () => {
+    await getRecipes({ query, health });
+  };
   return (
     <div
       className="App"
@@ -44,6 +56,11 @@ function App() {
           <MDBBtn>Search</MDBBtn>
         </div>
       </div>
+      <MDBRow className="row-cols-1 row-cols-md-3 g-4">
+        {data?.hits?.map((item: any) => (
+          <Card recipe={item.recipe} />
+        ))}
+      </MDBRow>
     </div>
   );
 }
