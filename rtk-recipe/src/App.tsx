@@ -10,6 +10,7 @@ import {
 import "./App.css";
 import { useGetRecipesMutation } from "./services/recipeApi";
 import Card from "./components/Card";
+import Spinner from "./components/Spinner";
 
 function App() {
   const [value, setValue] = useState("");
@@ -24,9 +25,19 @@ function App() {
     getFoodRecipes();
   }, [query, health]);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   const getFoodRecipes = async () => {
     await getRecipes({ query, health });
   };
+
+  const handleSearch = () => {
+    setQuery(value);
+    setValue("");
+  };
+
   return (
     <div
       className="App"
@@ -53,7 +64,7 @@ function App() {
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="col-auto">
-          <MDBBtn>Search</MDBBtn>
+          <MDBBtn onClick={handleSearch}>Search</MDBBtn>
         </div>
       </div>
       <MDBRow className="row-cols-1 row-cols-md-3 g-4">
