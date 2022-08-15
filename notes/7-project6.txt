@@ -1,1 +1,3 @@
 npm i mdb-react-ui-kit @reduxjs/toolkit react-redux redux redux-persist
+
+use redux persist to save redux state automatically in the localStorage
