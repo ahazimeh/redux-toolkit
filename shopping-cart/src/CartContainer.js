@@ -10,7 +10,7 @@ const CartContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCartTotal());
-  }, []);
+  }, [items]);
   return (
     <>
       <h2 className="lead-mb-0 mt-2">Your Shopping Cart</h2>

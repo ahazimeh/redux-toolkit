@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
+import { decrease, increase, remove } from "./redux/feature/cartSlice";
 
 const CartItem = ({ id, img, title, price, amount }) => {
+  const dispatch = useDispatch();
   return (
     <>
       {/* <div>CartItem</div> */}
@@ -22,12 +24,29 @@ const CartItem = ({ id, img, title, price, amount }) => {
               fas
               icon="trash"
               style={{ cursor: "pointer", color: "red" }}
+              onClick={() => {
+                dispatch(remove(id));
+              }}
             />
           </div>
           <div className="col-sm-8">
-            <MDBIcon fas icon="chevron-up" style={{ cursor: "pointer" }} />
+            <MDBIcon
+              fas
+              icon="chevron-up"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                dispatch(increase(id));
+              }}
+            />
             <p style={{ marginTop: "10px" }}>{amount}</p>
-            <MDBIcon fas icon="chevron-down" style={{ cursor: "pointer" }} />
+            <MDBIcon
+              fas
+              icon="chevron-down"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                dispatch(decrease(id));
+              }}
+            />
           </div>
         </div>
       </div>
