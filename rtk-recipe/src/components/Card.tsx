@@ -7,11 +7,12 @@ import {
   MDBCardBody,
 } from "mdb-react-ui-kit";
 
-interface propsFunction {
+interface PropsFunction {
+  toggleShow: (item: any) => void;
   recipe: any;
 }
 
-const Card: React.FC<propsFunction> = ({ recipe }) => {
+const Card: React.FC<PropsFunction> = ({ recipe, toggleShow }) => {
   return (
     <>
       <MDBCol>
@@ -22,6 +23,7 @@ const Card: React.FC<propsFunction> = ({ recipe }) => {
               alt={recipe.label}
               position="top"
               style={{ cursor: "pointer" }}
+              onClick={() => toggleShow(recipe)}
             />
             <MDBCardBody>
               <h5 className="fw-bold">{recipe.label}</h5>

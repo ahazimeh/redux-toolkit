@@ -11,6 +11,7 @@ import "./App.css";
 import { useGetRecipesMutation } from "./services/recipeApi";
 import Card from "./components/Card";
 import Spinner from "./components/Spinner";
+import Modal from "./components/Modal";
 
 const options = [
   {
@@ -77,6 +78,11 @@ function App() {
     setHealth(e.target.value);
   };
 
+  const toggleShow = (recipe: any) => {
+    setShow(!show);
+    setRecipe(recipe);
+  };
+
   return (
     <div
       className="App"
@@ -120,10 +126,18 @@ function App() {
         </div>
       </div>
       <MDBRow className="row-cols-1 row-cols-md-3 g-4">
-        {data?.hits?.map((item: any) => (
-          <Card recipe={item.recipe} />
+        {data?.hits?.map((item: any, index: any) => (
+          <Card key={index} toggleShow={toggleShow} recipe={item.recipe} />
         ))}
       </MDBRow>
+      {show && (
+        <Modal
+          show={show}
+          setShow={setShow}
+          recipe={recipe}
+          toggleShow={toggleShow}
+        />
+      )}
     </div>
   );
 }
