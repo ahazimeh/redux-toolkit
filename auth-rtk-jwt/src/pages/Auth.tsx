@@ -1,5 +1,8 @@
 import { MDBInput } from "mdb-react-ui-kit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useLoginUserMutation } from "../services/authApi";
 
 const initialState = {
   firstName: "",
@@ -11,12 +14,39 @@ const initialState = {
 
 const Auth = () => {
   const [formValue, setFormValue] = useState(initialState);
+
   const { firstName, lastName, email, password, confirmPassword } = formValue;
   const [showRegister, setShowRegister] = useState(false);
+
+  const navigate = useNavigate();
+  const [
+    loginUser,
+    {
+      data: loginData,
+      isSuccess: isLoginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
+  ] = useLoginUserMutation();
 
   const handleChange = (e: any) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
+
+  const handleLogin = async () => {
+    if (email && password) {
+      await loginUser({ email, password });
+    } else {
+      toast.error("Please fill all Input fields");
+    }
+  };
+
+  useEffect(() => {
+    if (isLoginSuccess) {
+      toast.success("User Login Successfully");
+      navigate("/dashboard");
+    }
+  }, [isLoginSuccess]);
   return (
     <>
       <section className="vh-100 gradient-custom">
@@ -97,6 +127,7 @@ const Auth = () => {
                       <button
                         className="btn btn-outline-light btn-lg px-5"
                         type="button"
+                        onClick={() => handleLogin()}
                       >
                         Login
                       </button>
