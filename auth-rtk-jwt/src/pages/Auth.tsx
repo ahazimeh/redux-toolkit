@@ -14,7 +14,9 @@ const Auth = () => {
   const { firstName, lastName, email, password, confirmPassword } = formValue;
   const [showRegister, setShowRegister] = useState(false);
 
-  const handleChange = () => {};
+  const handleChange = (e: any) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
   return (
     <>
       <section className="vh-100 gradient-custom">
@@ -35,9 +37,33 @@ const Auth = () => {
                         ? "Please enter your Email & Password"
                         : "Please enter User details"}
                     </p>
+                    {showRegister && (
+                      <>
+                        <div className="form-outline form-white mb-4">
+                          <MDBInput
+                            type="text"
+                            name="firstName"
+                            value={firstName}
+                            onChange={handleChange}
+                            label="First Name"
+                            className="form-control form-control-lg"
+                          />
+                        </div>
+                        <div className="form-outline form-white mb-4">
+                          <MDBInput
+                            type="text"
+                            name="lastName"
+                            value={lastName}
+                            onChange={handleChange}
+                            label="Last Name"
+                            className="form-control form-control-lg"
+                          />
+                        </div>
+                      </>
+                    )}
                     <div className="form-outline form-white mb-4">
                       <MDBInput
-                        type="text"
+                        type="email"
                         name="email"
                         value={email}
                         onChange={handleChange}
@@ -55,6 +81,18 @@ const Auth = () => {
                         className="form-control form-control-lg"
                       />
                     </div>
+                    {showRegister && (
+                      <div className="form-outline form-white mb-4">
+                        <MDBInput
+                          type="password"
+                          name="confirmPassword"
+                          value={confirmPassword}
+                          onChange={handleChange}
+                          label="Confirm Password"
+                          className="form-control form-control-lg"
+                        />
+                      </div>
+                    )}
                     {!showRegister ? (
                       <button
                         className="btn btn-outline-light btn-lg px-5"
