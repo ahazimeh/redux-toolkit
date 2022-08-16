@@ -2,6 +2,8 @@ import { MDBInput } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "../app/hooks";
+import { setUser } from "../features/authSlice";
 import { useLoginUserMutation } from "../services/authApi";
 
 const initialState = {
@@ -17,6 +19,7 @@ const Auth = () => {
 
   const { firstName, lastName, email, password, confirmPassword } = formValue;
   const [showRegister, setShowRegister] = useState(false);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const [
@@ -44,6 +47,9 @@ const Auth = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       toast.success("User Login Successfully");
+      dispatch(
+        setUser({ name: loginData.result.name, token: loginData.token })
+      );
       navigate("/dashboard");
     }
   }, [isLoginSuccess]);
