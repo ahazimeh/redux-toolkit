@@ -1,0 +1,1 @@
+npm i mdb-react-ui-kit react-router-dom react-toastify firebase @reduxjs/toolkit react-redux
