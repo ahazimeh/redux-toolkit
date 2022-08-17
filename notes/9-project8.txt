@@ -4,4 +4,4 @@ npm i mdb-react-ui-kit react-router-dom react-
 const { name } = useSelector((state) => ({ ...state.auth }));
 but in the slice I added:
 export const selectAuth = (state: RootState) => state.auth;
-const { name } = useAppSelector(selectAuth);
+const { name } = useAppSelector(selectAuth); // useAppSelector rather than useSelector because of typescript, it comes with the template with redux typescript
