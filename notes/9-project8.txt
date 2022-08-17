@@ -5,3 +5,19 @@ const { name } = useSelector((state) => ({ ...state.auth }));
 but in the slice I added:
 export const selectAuth = (state: RootState) => state.auth;
 const { name } = useAppSelector(selectAuth); // useAppSelector rather than useSelector because of typescript, it comes with the template with redux typescript
+
+protected route:
+add a generic component
+export const PrivateRoute = ({ children }: { children: any }) => {
+  const { token } = useSelector(selectAuth);
+  return token ? children : <LoadingToRedirect />;
+};
+and in the routes
+<Route
+    path="/dashboard"
+    element={
+        <PrivateRoute>
+        <Dashboard />
+        </PrivateRoute>
+    }
+/>
