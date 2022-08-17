@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../app/hooks";
 import { setUser } from "../features/authSlice";
-import { useLoginUserMutation } from "../services/authApi";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "../services/authApi";
 
 const initialState = {
   firstName: "",
@@ -31,6 +34,15 @@ const Auth = () => {
       error: loginError,
     },
   ] = useLoginUserMutation();
+  const [
+    registerUser,
+    {
+      data: registerData,
+      isSuccess: isRegisterSuccess,
+      isError: isRegisterError,
+      error: registerError,
+    },
+  ] = useRegisterUserMutation();
 
   const handleChange = (e: any) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -44,6 +56,14 @@ const Auth = () => {
     }
   };
 
+  const handleRegister = async () => {
+    if (password !== confirmPassword)
+      return toast.error("Password don't match");
+    if (firstName && lastName && password && email) {
+      await registerUser({ firstName, lastName, email, password });
+    }
+  };
+
   useEffect(() => {
     if (isLoginSuccess) {
       toast.success("User Login Successfully");
@@ -52,7 +72,14 @@ const Auth = () => {
       );
       navigate("/dashboard");
     }
-  }, [isLoginSuccess]);
+    if (isRegisterSuccess) {
+      toast.success("User Register Successfully");
+      dispatch(
+        setUser({ name: registerData.result.name, token: registerData.token })
+      );
+      navigate("/dashboard");
+    }
+  }, [isLoginSuccess, isRegisterSuccess]);
   return (
     <>
       <section className="vh-100 gradient-custom">
@@ -141,6 +168,7 @@ const Auth = () => {
                       <button
                         className="btn btn-outline-light btn-lg px-5"
                         type="button"
+                        onClick={() => handleRegister()}
                       >
                         Register
                       </button>
