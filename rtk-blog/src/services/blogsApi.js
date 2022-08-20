@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   serverTimestamp,
 } from "firebase/firestore";
@@ -51,7 +52,7 @@ export const blogsApi = createApi({
       async queryFn(id) {
         try {
           const docRef = doc(db, "blogs", id);
-          const snapshot = await getDocs(docRef);
+          const snapshot = await getDoc(docRef);
           return { data: snapshot.data() };
         } catch (err) {
           return { error: err };

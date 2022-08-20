@@ -7,7 +7,9 @@ export const store = configureStore({
     [blogsApi.reducerPath]: blogsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(blogsApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(blogsApi.middleware),
 });
 
 setupListeners(store.dispatch);

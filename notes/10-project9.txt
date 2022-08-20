@@ -1,1 +1,15 @@
 npm i mdb-react-ui-kit react-router-dom react-toastify firebase @reduxjs/toolkit react-redux
+
+
+const {data} = useFetchBlogQuery(id? id:skipToken) // skip if id not found
+
+// if we don't have a fixed url
+baseQuery: fakeBaseQuery(),
+// to write query function
+async queryFn() {
+
+}
+
+getDefaultMiddleware({
+      serializableCheck: false, // to remove serializableCheck warning in the console (got it when using firebase)
+    }).concat(blogsApi.middleware),
