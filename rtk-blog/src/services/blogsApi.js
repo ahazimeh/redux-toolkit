@@ -47,6 +47,18 @@ export const blogsApi = createApi({
       },
       invalidatesTags: ["Blog"],
     }),
+    fetchBlog: builder.query({
+      async queryFn(id) {
+        try {
+          const docRef = doc(db, "blogs", id);
+          const snapshot = await getDocs(docRef);
+          return { data: snapshot.data() };
+        } catch (err) {
+          return { error: err };
+        }
+      },
+      providesTags: ["Blog"],
+    }),
     deleteBlog: builder.mutation({
       async queryFn(id) {
         try {
@@ -61,5 +73,9 @@ export const blogsApi = createApi({
   }),
 });
 
-export const { useFetchBlogsQuery, useAddBlogMutation, useDeleteBlogMutation } =
-  blogsApi;
+export const {
+  useFetchBlogsQuery,
+  useAddBlogMutation,
+  useDeleteBlogMutation,
+  useFetchBlogQuery,
+} = blogsApi;
