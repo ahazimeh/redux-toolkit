@@ -1,1 +1,4 @@
 npm i --save @apollo/client graphql redux reselect
+
+// download the schema to the frontend
+"schema:download": "npx apollo service:download --endpoint=https://anilist.co/graphql ./src/app/graphql/graphql-schema.json"
