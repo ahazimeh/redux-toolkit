@@ -11,8 +11,13 @@ import { useEffect, useState } from "react";
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
-import { useAddBlogMutation } from "../services/blogsApi";
-import { useNavigate } from "react-router-dom";
+import {
+  useAddBlogMutation,
+  useFetchBlogQuery,
+  useUpdateBlogMutation,
+} from "../services/blogsApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 const initialState = {
   title: "",
@@ -24,8 +29,17 @@ const AddEditBlog = () => {
   const [progress, setProgress] = useState(null);
   const [addBlog] = useAddBlogMutation();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { data: blog } = useFetchBlogQuery(id ? id : skipToken);
+  const [updateBlog] = useUpdateBlogMutation();
 
   const { title, description } = data;
+
+  useEffect(() => {
+    if (id && blog) {
+      setData({ ...blog });
+    }
+  }, [id, blog]);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -69,8 +83,15 @@ const AddEditBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title && description) {
-      await addBlog(data);
-      navigate("/");
+      if (!id) {
+        await addBlog(data);
+        toast.success("Blog Added Successfully");
+        navigate("/");
+      } else {
+        await updateBlog({ id, data });
+        toast.success("Blog Updated Successfully");
+        navigate("/");
+      }
     }
   };
   return (
@@ -86,7 +107,7 @@ const AddEditBlog = () => {
         className="container"
       >
         <MDBCard alignment="center">
-          <h4 className="fw-bold">Create Blog</h4>
+          <h4 className="fw-bold">{id ? "Update Blog" : "Create Blog"}</h4>
           <MDBCardBody>
             <MDBValidation
               className="row g-3"
@@ -135,7 +156,7 @@ const AddEditBlog = () => {
                   style={{ width: "100%" }}
                   disabled={progress !== null && progress < 100}
                 >
-                  Submit
+                  {id ? "Update" : "Submit"}
                 </MDBBtn>
               </div>
             </MDBValidation>
