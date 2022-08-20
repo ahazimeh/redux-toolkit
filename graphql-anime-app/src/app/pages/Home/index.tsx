@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Dispatch } from "redux";
+import Card from "../../components/Card";
 import { useAppDispatch } from "../../hooks";
 import animeService from "../../services/animeService";
 import { setAnimeList } from "./homeSlice";
@@ -27,6 +28,7 @@ const Home = () => {
   return (
     <>
       <h3>Anime App</h3>
+      <Card />
     </>
   );
 };

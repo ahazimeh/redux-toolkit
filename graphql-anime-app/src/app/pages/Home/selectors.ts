@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
+import { IRootState } from "../../types";
 
-const selectHome = (state: any) => state.home;
+const selectHome = (state: IRootState) => state.home;
 
 export const makeSelectAnimeList = createSelector(
   selectHome,
