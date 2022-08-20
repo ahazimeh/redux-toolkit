@@ -29,8 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "schema:download": "npx apollo service:download --endpoint=https://anilist.co/graphql ./src/app/graphql/schema.json",
-    "schema:generate-watch": "npx apollo codegen:generate --localSchemaFile=./src/app/graphql/schema.json --target=typescript --tagName=gql --watch",
-    "schema:generate-watch1": "npx apollo codegen:generate --localSchemaFile=./src/app/graphql/schema.json --target=typescript --tagName=gql"
+    "schema:generate-watch": "npx apollo codegen:generate --localSchemaFile=./src/app/graphql/schema.json --target=typescript --tagName=gql --watch"
   },
   "eslintConfig": {
     "extends": [

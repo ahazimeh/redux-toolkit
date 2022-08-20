@@ -1,9 +1,10 @@
 import "./App.css";
+import Home from "./app/pages/Home";
 
 function App() {
   return (
     <div className="App">
-      <h2>Graphql App</h2>
+      <Home />
     </div>
   );
 }
