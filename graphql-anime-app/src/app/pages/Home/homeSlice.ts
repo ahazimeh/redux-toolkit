@@ -1,14 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IHomeState } from "./types";
 
-const initialState = {
-  animeList: [],
+const initialState: IHomeState = {
+  animeList: null,
 };
 
 const HomeSlice = createSlice({
   name: "home",
   initialState,
-  reducers: {},
+  reducers: {
+    setAnimeList(state, action) {
+      state.animeList = action.payload;
+    },
+  },
 });
 
-export const {} = HomeSlice.actions;
+export const { setAnimeList } = HomeSlice.actions;
 export default HomeSlice.reducer;
