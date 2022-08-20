@@ -10,13 +10,17 @@ import {
   MDBRow,
 } from "mdb-react-ui-kit";
 import Spinner from "../components/Spinner";
-import { useFetchBlogsQuery } from "../services/blogsApi";
+import {
+  useDeleteBlogMutation,
+  useFetchBlogsQuery,
+} from "../services/blogsApi";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Home = () => {
   const { data, isLoading, isError, error } = useFetchBlogsQuery();
+  const [deleteBlog] = useDeleteBlogMutation();
 
   useEffect(() => {
     isError && toast.error(error);
@@ -26,7 +30,12 @@ const Home = () => {
     return <Spinner />;
   }
 
-  const handleDelete = () => {};
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure to delete ?")) {
+      await deleteBlog(id);
+      toast.success("Blog deleted successfully");
+    }
+  };
   return (
     <div
       style={{
