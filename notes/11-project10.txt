@@ -2,3 +2,14 @@ npm i --save @apollo/client graphql redux reselect
 
 // download the schema to the frontend
 "schema:download": "npx apollo service:download --endpoint=https://anilist.co/graphql ./src/app/graphql/graphql-schema.json"
+
+we had folder called selector and we added the code below so this selector will return what is inside animeList to make things a bit easier 
+import { createSelector } from "reselect";
+import { IRootState } from "../../types";
+
+const selectHome = (state: IRootState) => state.home;
+
+export const makeSelectAnimeList = createSelector(
+  selectHome,
+  (home) => home.animeList
+);
