@@ -1,0 +1,76 @@
+***OPTIMIZATION:
+export const selectAllPosts = (state) => state.posts.posts;
+
+const postsForUser = useSelector((state) => {
+    const allPosts = selectAllPosts(state);
+    return allPosts.filter((post) => post.userId === Number(userId));
+  });
+each time a dispatch happens all selectors will be checked again
+and since this returns a new array everytime then the component will rerender
+
+solution:
+export const selectPostByUser = createSelector(
+  [selectAllPosts, (state, userId) => userId],
+  (posts, userId) => posts.filter((post) => post.userId === userId)
+);
+
+const postsForUser = useSelector((state) => {
+    const allPosts = selectPostByUser(state, Number(userId), "asd");
+    return allPosts;
+  });
+
+
+
+createEntityAdapter:
+
+const postsAdapter = createEntityAdapter({
+  sortComparer: (a, b) => b.date.localeCompare(a.date), // sort elements
+});
+
+const initialState = {
+  posts: [],
+  status: "idle", //'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null,
+  count: 0,
+};
+to
+
+const initialState = postsAdapter.getInitialState({
+  status: "idle", //'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null,
+  count: 0,
+})
+
+
+// const existingPost = state.posts.find((post) => post.id === postId);
+const existingPost = state.entities["postId"]
+// state.posts = state.posts.concat(loadedPosts);
+postsAdapter.upsertMany(state, loadedPosts
+// state.posts.push(action.payload);
+postsAdapter.addOne(state, action.payload);
+// const posts = state.posts.filter((post) => post.id !== id);
+// state.posts = [...posts, action.payload];
+postsAdapter.upsertOne(state, action.payload);
+// const posts = state.posts.filter((post) => post.id !== id);
+// state.posts = posts;
+postsAdapter.removeOne(state, id);
+
+// provided automatically
+export const {
+    selectAll: selectAllPosts,
+    selectById: selectPostById,
+    selectIds: selectPostIds
+    // Pass in a selector that returns the posts slice of state
+  } = postsAdapter.getSelectors(state => state.posts)
+
+
+// Advanced RTK
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+export const apiSlice = createApi({
+  reducerPath: "api", // optional(default)
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3500" }),
+  tagTypes: ["Post"],
+  endpoints: (builder) => ({}),
+});
+
